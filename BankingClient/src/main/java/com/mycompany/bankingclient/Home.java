@@ -27,21 +27,111 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        BankName = new javax.swing.JLabel();
+        UserName = new javax.swing.JLabel();
+        WelcomeMsg = new javax.swing.JLabel();
+        CreateAcc = new javax.swing.JButton();
+        MakeTrans = new javax.swing.JButton();
+        CheckBal = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        BankName.setFont(new java.awt.Font("Castellar", 1, 36)); // NOI18N
+        BankName.setText("JJ's Bank");
+
+        UserName.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        UserName.setText("UserName");
+
+        WelcomeMsg.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        WelcomeMsg.setText("What would you like to do today?");
+
+        CreateAcc.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        CreateAcc.setText("Create New Account");
+        CreateAcc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateAccActionPerformed(evt);
+            }
+        });
+
+        MakeTrans.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        MakeTrans.setText("Make a Transaction");
+        MakeTrans.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MakeTransActionPerformed(evt);
+            }
+        });
+
+        CheckBal.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        CheckBal.setText("Check Balances");
+        CheckBal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CheckBalActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BankName)
+                    .addComponent(UserName))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(WelcomeMsg))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(CreateAcc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MakeTrans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CheckBal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(BankName)
+                .addGap(18, 18, 18)
+                .addComponent(UserName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(WelcomeMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(CreateAcc)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(MakeTrans)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(CheckBal)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void CreateAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateAccActionPerformed
+        NewCustomer create = new NewCustomer();
+        create.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_CreateAccActionPerformed
+
+    private void MakeTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MakeTransActionPerformed
+        MakeTransaction trans = new MakeTransaction();
+        trans.setAccountList();
+        trans.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_MakeTransActionPerformed
+
+    private void CheckBalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckBalActionPerformed
+        Balance bal = new Balance();
+        bal.setAccountList();
+        bal.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_CheckBalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +169,11 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BankName;
+    private javax.swing.JButton CheckBal;
+    private javax.swing.JButton CreateAcc;
+    private javax.swing.JButton MakeTrans;
+    private javax.swing.JLabel UserName;
+    private javax.swing.JLabel WelcomeMsg;
     // End of variables declaration//GEN-END:variables
 }
