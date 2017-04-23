@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import javax.ws.rs.core.MediaType;
 import org.json.JSONObject;
 
-
 /**
  *
  * @author user
@@ -124,7 +123,7 @@ public class NewCustomer extends javax.swing.JFrame {
         jLabel7.setText("Security Answer:");
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel8.setText("Passcode:");
+        jLabel8.setText("Password:");
 
         FullName.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         FullName.addActionListener(new java.awt.event.ActionListener() {
@@ -241,6 +240,16 @@ public class NewCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_PasswordActionPerformed
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
+        Customer c = new Customer();
+        c.setFullName(FullName.getText());
+        c.setAddress(Address.getText());
+        c.setEmail(Email.getText());
+        c.setMobile(Integer.parseInt(Mobile.getText()));
+        c.setSecurityQuestion(SecurityQ.getText());
+        c.setSecurityAnswer(SecurityA.getText());
+        c.setPasscode(new String(Password.getPassword()));
+        
+        this.newCustomer(c);
         
         Home myHome = new Home();
         myHome.setVisible(true);
