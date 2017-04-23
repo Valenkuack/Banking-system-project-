@@ -5,6 +5,15 @@
  */
 package com.mycompany.bankingclient;
 
+import com.mycompany.bankingclient.models.Customer;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import javax.swing.JOptionPane;
+import javax.ws.rs.core.MediaType;
+import org.json.JSONObject;
+
+
 /**
  *
  * @author user
@@ -12,10 +21,57 @@ package com.mycompany.bankingclient;
 public class NewCustomer extends javax.swing.JFrame {
 
     /**
-     * Creates new form ClientGUI
+     * Creates new form NewCustomer
      */
     public NewCustomer() {
         initComponents();
+    }
+    
+    //POST
+    public void newCustomer(Customer customer){
+        String url = "http://localhost:8080/BankingSystem/api/customer";
+        Client client = Client.create();
+        WebResource resource = client.resource(url);
+        
+        ClientResponse response = resource
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, new JSONObject(customer).toString());
+        if (response.getStatus() == 204){
+            getCustomer(customer);
+        }else{
+            JOptionPane.showMessageDialog(null, "Unable to create new customer.");
+        }
+    }
+    
+    //GET
+    public void getCustomer(Customer customer){
+        String url = "http://localhost:8080/BankingSystem/api/customer/login";
+        Client client = Client.create();
+        WebResource resource = client.resource(url);
+        
+        ClientResponse response = resource
+                .queryParam("email", customer.getEmail())
+                .queryParam("passcode", customer.getPasscode())
+                .accept(MediaType.APPLICATION_JSON)
+                .get(ClientResponse.class);
+        
+        if (response.getStatus() == 200){
+            String entity = response.getEntity(String.class);
+            System.out.println(entity);
+            
+            JSONObject obj = new JSONObject(entity);
+            customer.setCusId(obj.getInt("CusId"));
+            
+            CreateAccount createAccountScreen = new CreateAccount();
+            createAccountScreen.setCurrentCustomer(customer);
+            createAccountScreen.setVisible(true);
+            this.dispose();
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Unable to create new customer.");
+        }
+        
     }
 
     /**
@@ -185,6 +241,7 @@ public class NewCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_PasswordActionPerformed
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
+        
         Home myHome = new Home();
         myHome.setVisible(true);
         dispose();

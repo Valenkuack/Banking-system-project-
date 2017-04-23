@@ -121,14 +121,14 @@ public class Home extends javax.swing.JFrame {
 
     private void MakeTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MakeTransActionPerformed
         MakeTransaction trans = new MakeTransaction();
-        trans.setAccountList();
+        //trans.setAccountList();
         trans.setVisible(true);
         dispose();
     }//GEN-LAST:event_MakeTransActionPerformed
 
     private void CheckBalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckBalActionPerformed
         Balance bal = new Balance();
-        bal.setAccountList();
+        //bal.setAccountList();
         bal.setVisible(true);
         dispose();
     }//GEN-LAST:event_CheckBalActionPerformed

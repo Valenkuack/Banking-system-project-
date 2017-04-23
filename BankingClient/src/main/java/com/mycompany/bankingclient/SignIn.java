@@ -30,7 +30,7 @@ public class SignIn extends javax.swing.JFrame {
         BankName = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        FullName = new javax.swing.JTextField();
+        Email = new javax.swing.JTextField();
         Password = new javax.swing.JTextField();
         Submit = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -42,7 +42,7 @@ public class SignIn extends javax.swing.JFrame {
         BankName.setText("JJ's Bank");
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel2.setText("Full Name:");
+        jLabel2.setText("Email:");
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("Password:");
@@ -90,9 +90,9 @@ public class SignIn extends javax.swing.JFrame {
                                         .addComponent(jLabel3))
                                     .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(FullName)
+                                        .addComponent(Email)
                                         .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,7 +102,7 @@ public class SignIn extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(FullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -168,7 +168,7 @@ public class SignIn extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BankName;
-    private javax.swing.JTextField FullName;
+    private javax.swing.JTextField Email;
     private javax.swing.JTextField Password;
     private javax.swing.JButton SignUp;
     private javax.swing.JButton Submit;
