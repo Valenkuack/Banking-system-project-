@@ -173,5 +173,9 @@ public class BankAccount implements Serializable {
     public String toString() {
         return "com.mycompany.bankingclient.BankAccount[ aId=" + aId + " ]";
     }
+
+    public void setBalance(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
