@@ -18,6 +18,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -67,6 +68,19 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Customer> findAll() {
         return super.findAll();
+    }
+    
+    @GET
+    @Path("login")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Customer getCustomer(@QueryParam("email") String email, @QueryParam("passcode") String passcode){
+        Customer c = null;
+        for(Customer cu: findAll()){
+            if(cu.getEmail().equals(email)&&cu.getPasscode().equals(passcode)){
+                c = cu;
+            }
+        }
+        return c;
     }
 
     @GET

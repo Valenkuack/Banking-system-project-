@@ -5,17 +5,46 @@
  */
 package com.mycompany.bankingclient;
 
+import com.mycompany.bankingclient.models.Customer;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import javax.swing.JOptionPane;
+import org.json.JSONObject;
+
 /**
  *
  * @author user
  */
 public class SignIn extends javax.swing.JFrame {
 
+    Customer currentCustomer;
     /**
      * Creates new form SignIn
      */
     public SignIn() {
         initComponents();
+        
+        this.currentCustomer = new Customer();
+    }
+    
+    public void signIn(){
+        String getUrl = "http://localhost:8080/api/BankingSystem/customer/login";
+        Client client = Client.create();
+        WebResource target = client.resource(getUrl);
+        
+        String pw = new String(Password.getPassword());
+        
+        ClientResponse response = target
+                .queryParam("email", Email.getText())
+                .queryParam("passcode", pw)
+                .get(ClientResponse.class);
+        
+        String entity = response.getEntity(String.class);
+        System.out.println(entity);
+        
+        JSONObject obj = new JSONObject(entity);
+        this.currentCustomer = new Customer(obj.getInt("cusId"));
     }
 
     /**
@@ -31,10 +60,10 @@ public class SignIn extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Email = new javax.swing.JTextField();
-        Password = new javax.swing.JTextField();
         Submit = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         SignUp = new javax.swing.JButton();
+        Password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,8 +119,8 @@ public class SignIn extends javax.swing.JFrame {
                                         .addComponent(jLabel3))
                                     .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(Email)
-                                        .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(Email, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                                        .addComponent(Password)))))))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -102,14 +131,14 @@ public class SignIn extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(Submit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(SignUp))
@@ -126,9 +155,17 @@ public class SignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_SignUpActionPerformed
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
-        Home myHome = new Home();
-        myHome.setVisible(true);
-        dispose();
+        signIn();
+        
+        //checks if customer is logged in successfully
+        if(this.currentCustomer != null){
+            Home myHome = new Home();
+            myHome.setVisible(true);
+            dispose();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Unable to login");
+        }
     }//GEN-LAST:event_SubmitActionPerformed
 
     /**
@@ -169,7 +206,7 @@ public class SignIn extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BankName;
     private javax.swing.JTextField Email;
-    private javax.swing.JTextField Password;
+    private javax.swing.JPasswordField Password;
     private javax.swing.JButton SignUp;
     private javax.swing.JButton Submit;
     private javax.swing.JLabel jLabel2;
