@@ -37,7 +37,7 @@ public class CreateAccount extends javax.swing.JFrame {
     /**
      * Create a client Method
      */
-    public void createAccount (Account account) {
+    public void createAccount (BankAccount account) {
         
     }
     
@@ -56,7 +56,7 @@ public class CreateAccount extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        Account_type_createacc = new javax.swing.JComboBox<>();
+        AccountType = new javax.swing.JComboBox<>();
         debit_Card = new java.awt.Checkbox();
         Credit_card = new java.awt.Checkbox();
         Submit_createacc = new javax.swing.JButton();
@@ -78,11 +78,11 @@ public class CreateAccount extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel5.setText("Credit Card");
 
-        Account_type_createacc.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        Account_type_createacc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        Account_type_createacc.addActionListener(new java.awt.event.ActionListener() {
+        AccountType.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        AccountType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        AccountType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Account_type_createaccActionPerformed(evt);
+                AccountTypeActionPerformed(evt);
             }
         });
 
@@ -124,7 +124,7 @@ public class CreateAccount extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(debit_Card, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Account_type_createacc, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(AccountType, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(30, 30, 30))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(Submit_createacc)
@@ -140,7 +140,7 @@ public class CreateAccount extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(Account_type_createacc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AccountType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
@@ -157,16 +157,16 @@ public class CreateAccount extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Account_type_createaccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Account_type_createaccActionPerformed
+    private void AccountTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AccountTypeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Account_type_createaccActionPerformed
+    }//GEN-LAST:event_AccountTypeActionPerformed
 
     private void Submit_createaccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit_createaccActionPerformed
        
         BankAccount a = new BankAccount();
         
         a.setBalance(0);
-        a.setType(accountType.getSelectedItem().toString());
+        a.setAccountType(AccountType.getSelectedItem().toString());
         a.setSortCode(112233);
         a.setCusId(currentCustomer);
         
@@ -231,7 +231,7 @@ public class CreateAccount extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> Account_type_createacc;
+    private javax.swing.JComboBox<String> AccountType;
     private java.awt.Checkbox Credit_card;
     private javax.swing.JButton Submit_createacc;
     private java.awt.Checkbox debit_Card;
