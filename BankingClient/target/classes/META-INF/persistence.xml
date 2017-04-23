@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.mycompany_BankingClient_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.mycompany.bankingclient.models.Customer</class>
+    <class>com.mycompany.bankingclient.models.BankAccount</class>
+    <class>com.mycompany.bankingclient.models.Transaction</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql4.gear.host:3306/bankingsystem?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="bankingsystem"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="Tl1f?a176hG_"/>
+    </properties>
+  </persistence-unit>
+</persistence>
