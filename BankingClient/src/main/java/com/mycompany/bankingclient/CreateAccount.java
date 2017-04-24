@@ -6,15 +6,10 @@
 package com.mycompany.bankingclient;
 
 import com.mycompany.bankingclient.models.BankAccount;
-import static com.mycompany.bankingclient.models.BankAccount_.accountType;
 import com.mycompany.bankingclient.models.Customer;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.ClientResponse;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import javax.ws.rs.core.MediaType;
-import org.json.JSONObject;
+
 
 
 /**
@@ -22,7 +17,8 @@ import org.json.JSONObject;
  * @author User
  */
 public class CreateAccount extends javax.swing.JFrame {
-    Customer currentCustomer; 
+    final String ACCOUNT_API_PATH = "http://localhost:8080/BankingSystem/api/bankAccount";
+    Customer customer; 
     /**
      * Creates new form CreateAccount
      */
@@ -30,8 +26,9 @@ public class CreateAccount extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void setCurrentCustomer(Customer currentCustomer){
-        this.currentCustomer = currentCustomer;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        UserName.setText(customer.getFullName());
     }
     
     /**
@@ -52,22 +49,22 @@ public class CreateAccount extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        UserName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         AccountType = new javax.swing.JComboBox<>();
-        debit_Card = new java.awt.Checkbox();
-        Credit_card = new java.awt.Checkbox();
         Submit_createacc = new javax.swing.JButton();
+        debitCard = new javax.swing.JCheckBox();
+        creditCard = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Castellar", 1, 36)); // NOI18N
         jLabel1.setText("jj's bank");
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel2.setText("*User Name*");
+        UserName.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        UserName.setText("*User Name*");
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("Account type:");
@@ -79,18 +76,12 @@ public class CreateAccount extends javax.swing.JFrame {
         jLabel5.setText("Credit Card");
 
         AccountType.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        AccountType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        AccountType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Savings", "Current", "Fixed Deposit" }));
         AccountType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AccountTypeActionPerformed(evt);
             }
         });
-
-        debit_Card.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        debit_Card.setLabel("checkbox1");
-
-        Credit_card.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        Credit_card.setLabel("checkbox2");
 
         Submit_createacc.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         Submit_createacc.setText("Submit");
@@ -110,7 +101,7 @@ public class CreateAccount extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(UserName, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 27, Short.MAX_VALUE)
@@ -122,9 +113,9 @@ public class CreateAccount extends javax.swing.JFrame {
                                     .addComponent(jLabel5))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(debit_Card, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(AccountType, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(AccountType, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(debitCard)
+                                    .addComponent(creditCard))
                                 .addGap(30, 30, 30))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(Submit_createacc)
@@ -136,20 +127,20 @@ public class CreateAccount extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(UserName)
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(AccountType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(debit_Card, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(debitCard))
+                .addGap(2, 2, 2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(Credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                    .addComponent(creditCard))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addComponent(Submit_createacc)
                 .addGap(21, 21, 21))
         );
@@ -164,35 +155,32 @@ public class CreateAccount extends javax.swing.JFrame {
     private void Submit_createaccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit_createaccActionPerformed
        
         BankAccount a = new BankAccount();
-        
         a.setBalance(0);
         a.setAccountType(AccountType.getSelectedItem().toString());
         a.setSortCode(112233);
-        a.setCusId(currentCustomer);
-        
-        String url= "http://loalhost:8080/Bankingsystem/api/account";
-        Client client = Client.create();
-        WebResource resource = client.resource(url);
-        
-        System.out.println(new JSONObject(a));
-        
-        ClientResponse response = resource
-                .accept (MediaType.APPLICATION_JSON)
-                .type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class, new JSONObject(a).toString());
-        
-        if (response.getStatus() == 204) {
-            JOptionPane.showMessageDialog(null, "Account has been created");
-        } else {
-            JOptionPane.showMessageDialog(null, "Unable to process");
+        a.setDateOfCreation(new Date());
+        a.setCusId(customer);
+        if(debitCard.isSelected() == true){
+            int cardNo;
+            cardNo = (int) (Math.random()*9999999 + 1000000);
+            a.setDebitCard(cardNo);
+        }
+        if(creditCard.isSelected() == true){
+            int cardNo;
+            cardNo = (int) (Math.random()*9999999 + 1000000);
+            a.setCreditCard(cardNo);
         }
         
-       
-        
-        
-        Home myHome = new Home();
-        myHome.setVisible(true);
-        dispose();
+        boolean status = RESTConnection.sendPostRequest(a, ACCOUNT_API_PATH);
+        if(status == true){
+            JOptionPane.showMessageDialog(null, "Your new account has been created.");
+            
+            Home myHome = new Home();
+            myHome.setVisible(true);
+            dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Unable to create new account.");
+        }
     }//GEN-LAST:event_Submit_createaccActionPerformed
 
     /**
@@ -232,11 +220,11 @@ public class CreateAccount extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> AccountType;
-    private java.awt.Checkbox Credit_card;
     private javax.swing.JButton Submit_createacc;
-    private java.awt.Checkbox debit_Card;
+    private javax.swing.JLabel UserName;
+    private javax.swing.JCheckBox creditCard;
+    private javax.swing.JCheckBox debitCard;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

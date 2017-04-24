@@ -6,12 +6,9 @@
 package com.mycompany.bankingclient;
 
 import com.mycompany.bankingclient.models.Customer;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
+import com.mycompany.bankingclient.models.BankAccount;
 import javax.swing.JOptionPane;
-import javax.ws.rs.core.MediaType;
-import org.json.JSONObject;
+import java.util.Date;
 
 /**
  *
@@ -19,58 +16,13 @@ import org.json.JSONObject;
  */
 public class NewCustomer extends javax.swing.JFrame {
 
+    final String CUSTOMER_API_PATH = "http://localhost:8080/BankingSystem/api/customer";
+    final String ACCOUNT_API_PATH = "http://localhost:8080/BankingSystem/api/bankAccount";
     /**
      * Creates new form NewCustomer
      */
     public NewCustomer() {
         initComponents();
-    }
-    
-    //POST
-    public void newCustomer(Customer customer){
-        String url = "http://localhost:8080/BankingSystem/api/customer";
-        Client client = Client.create();
-        WebResource resource = client.resource(url);
-        
-        ClientResponse response = resource
-                .accept(MediaType.APPLICATION_JSON)
-                .type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class, new JSONObject(customer).toString());
-        if (response.getStatus() == 204){
-            getCustomer(customer);
-        }else{
-            JOptionPane.showMessageDialog(null, "Unable to create new customer.");
-        }
-    }
-    
-    //GET
-    public void getCustomer(Customer customer){
-        String url = "http://localhost:8080/BankingSystem/api/customer/login";
-        Client client = Client.create();
-        WebResource resource = client.resource(url);
-        
-        ClientResponse response = resource
-                .queryParam("email", customer.getEmail())
-                .queryParam("passcode", customer.getPasscode())
-                .accept(MediaType.APPLICATION_JSON)
-                .get(ClientResponse.class);
-        
-        if (response.getStatus() == 200){
-            String entity = response.getEntity(String.class);
-            System.out.println(entity);
-            
-            JSONObject obj = new JSONObject(entity);
-            customer.setCusId(obj.getInt("CusId"));
-            
-            CreateAccount createAccountScreen = new CreateAccount();
-            createAccountScreen.setCurrentCustomer(customer);
-            createAccountScreen.setVisible(true);
-            this.dispose();
-        }
-        else{
-            JOptionPane.showMessageDialog(null,"Unable to create new customer.");                   
-        }
-        
     }
 
     /**
@@ -240,16 +192,46 @@ public class NewCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_PasswordActionPerformed
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
+        //create new customer
         Customer c = new Customer();
+        String password = new String(Password.getPassword());
         c.setFullName(FullName.getText());
         c.setAddress(Address.getText());
         c.setEmail(Email.getText());
         c.setMobile(Integer.parseInt(Mobile.getText()));
         c.setSecurityQuestion(SecurityQ.getText());
         c.setSecurityAnswer(SecurityA.getText());
-        c.setPasscode(new String(Password.getPassword()));
+        c.setPasscode(password);
         
-        this.newCustomer(c);
+        boolean status = RESTConnection.sendPostRequest(c, CUSTOMER_API_PATH);
+        
+        //create new account
+        if(status == true){
+            //Sign in request
+            c = RESTConnection.signIn(Email.getText(), password);
+            if(c != null){
+                BankAccount account = new BankAccount();
+                account.setBalance(0);
+                account.setAccountType("Current"); //default account when creating a customer is current account
+                account.setSortCode(112233);
+                account.setCusId(c);
+                account.setDateOfCreation(new Date());
+                //new customers are assumed to have at least a current account and is not required to have a debit or credit card
+                
+                boolean accountStatus = RESTConnection.sendPostRequest(account, ACCOUNT_API_PATH);
+                if(accountStatus == true){
+                    JOptionPane.showMessageDialog(null, "Your account has been created. Please login.");
+                    
+                    SignIn signin = new SignIn();
+                    signin.setVisible(true);
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Unable to create new account.");
+                }
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Unable to create new customer.");
+        }
     }//GEN-LAST:event_SubmitActionPerformed
 
     /**

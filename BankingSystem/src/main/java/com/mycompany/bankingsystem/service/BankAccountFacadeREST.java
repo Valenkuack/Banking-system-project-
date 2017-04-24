@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
  * @author user
  */
 @Stateless
-@Path("bankaccount")
+@Path("bankAccount")
 public class BankAccountFacadeREST extends AbstractFacade<BankAccount> {
 
     @PersistenceContext(unitName = "com.mycompany_BankingSystem_war_1.0-SNAPSHOTPU")
@@ -87,5 +87,6 @@ public class BankAccountFacadeREST extends AbstractFacade<BankAccount> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
     
 }

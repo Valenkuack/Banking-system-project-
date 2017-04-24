@@ -65,6 +65,17 @@ public class Customer implements Serializable {
     public Customer() {
     }
 
+    public Customer(Integer cusId, String fullName, String address, String email, Integer mobile, String securityAnswer, String securityQuestion, String passcode) {
+        this.cusId = cusId;
+        this.fullName = fullName;
+        this.address = address;
+        this.email = email;
+        this.mobile = mobile;
+        this.securityAnswer = securityAnswer;
+        this.securityQuestion = securityQuestion;
+        this.passcode = passcode;
+    }
+
     public Customer(Integer cusId) {
         this.cusId = cusId;
     }

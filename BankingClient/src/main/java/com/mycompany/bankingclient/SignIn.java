@@ -18,34 +18,15 @@ import org.json.JSONObject;
  */
 public class SignIn extends javax.swing.JFrame {
 
-    Customer currentCustomer;
+    Customer customer;
     /**
      * Creates new form SignIn
      */
     public SignIn() {
         initComponents();
-        
-        this.currentCustomer = new Customer();
+        customer = new Customer();
     }
-    
-    public void signIn(){
-        String getUrl = "http://localhost:8080/api/BankingSystem/customer/login";
-        Client client = Client.create();
-        WebResource target = client.resource(getUrl);
-        
-        String pw = new String(Password.getPassword());
-        
-        ClientResponse response = target
-                .queryParam("email", Email.getText())
-                .queryParam("passcode", pw)
-                .get(ClientResponse.class);
-        
-        String entity = response.getEntity(String.class);
-        System.out.println(entity);
-        
-        JSONObject obj = new JSONObject(entity);
-        this.currentCustomer = new Customer(obj.getInt("cusId"));
-    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -155,16 +136,14 @@ public class SignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_SignUpActionPerformed
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
-        signIn();
-        
-        //checks if customer is logged in successfully
-        if(this.currentCustomer != null){
-            Home myHome = new Home();
-            myHome.setVisible(true);
-            dispose();
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Unable to login");
+        customer = RESTConnection.signIn(Email.getText(), new String(Password.getPassword()));
+        if(customer == null){
+            JOptionPane.showMessageDialog(null, "Login was unsuccessful.");
+        }else{
+            Home myhome = new Home();
+            myhome.setCustomer(customer);
+            myhome.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_SubmitActionPerformed
 

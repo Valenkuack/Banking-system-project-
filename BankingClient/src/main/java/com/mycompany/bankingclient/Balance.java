@@ -5,17 +5,25 @@
  */
 package com.mycompany.bankingclient;
 
+import com.mycompany.bankingclient.models.Customer;
+
 /**
  *
  * @author User
  */
 public class Balance extends javax.swing.JFrame {
 
+    Customer customer;
     /**
      * Creates new form Balance
      */
     public Balance() {
         initComponents();
+    }
+    
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        UserName.setText(customer.getFullName());
     }
 
     /**
@@ -28,7 +36,7 @@ public class Balance extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        UserName = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         accounts = new javax.swing.JComboBox<>();
@@ -46,8 +54,8 @@ public class Balance extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel2.setText("*User Name*");
+        UserName.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        UserName.setText("*User Name*");
 
         jLabel1.setFont(new java.awt.Font("Castellar", 1, 36)); // NOI18N
         jLabel1.setText("jj's bank");
@@ -64,7 +72,6 @@ public class Balance extends javax.swing.JFrame {
         });
 
         textField1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        textField1.setText("textField1");
         textField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textField1ActionPerformed(evt);
@@ -92,7 +99,7 @@ public class Balance extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(UserName, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -113,7 +120,7 @@ public class Balance extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(UserName)
                 .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -185,10 +192,10 @@ public class Balance extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back_Balance;
+    private javax.swing.JLabel UserName;
     private javax.swing.JComboBox<String> accounts;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private java.awt.TextField textField1;

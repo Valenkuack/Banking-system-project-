@@ -5,17 +5,26 @@
  */
 package com.mycompany.bankingclient;
 
+import com.mycompany.bankingclient.models.BankAccount;
+import com.mycompany.bankingclient.models.Customer;
+
 /**
  *
  * @author user
  */
 public class Home extends javax.swing.JFrame {
 
+    Customer customer;
     /**
      * Creates new form Home
      */
     public Home() {
         initComponents();
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        UserName.setText(customer.getFullName());
     }
 
     /**
@@ -114,7 +123,8 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CreateAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateAccActionPerformed
-        NewCustomer create = new NewCustomer();
+        CreateAccount create = new CreateAccount();
+        create.setCustomer(customer);
         create.setVisible(true);
         dispose();
     }//GEN-LAST:event_CreateAccActionPerformed
@@ -122,6 +132,7 @@ public class Home extends javax.swing.JFrame {
     private void MakeTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MakeTransActionPerformed
         MakeTransaction trans = new MakeTransaction();
         //trans.setAccountList();
+        trans.setCustomer(customer);
         trans.setVisible(true);
         dispose();
     }//GEN-LAST:event_MakeTransActionPerformed
@@ -129,6 +140,7 @@ public class Home extends javax.swing.JFrame {
     private void CheckBalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckBalActionPerformed
         Balance bal = new Balance();
         //bal.setAccountList();
+        bal.setCustomer(customer);
         bal.setVisible(true);
         dispose();
     }//GEN-LAST:event_CheckBalActionPerformed

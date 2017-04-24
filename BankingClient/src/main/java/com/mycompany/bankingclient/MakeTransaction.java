@@ -6,6 +6,7 @@
 package com.mycompany.bankingclient;
 
 import com.mycompany.bankingclient.models.BankAccount;
+import com.mycompany.bankingclient.models.Customer;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -18,7 +19,7 @@ public class MakeTransaction extends javax.swing.JFrame {
 
     List<BankAccount> accountList;
     List<String> accountNumber;
-    
+    Customer customer;
     BankAccount selectedAccount;
     /**
      * Creates new form Transaction
@@ -31,6 +32,10 @@ public class MakeTransaction extends javax.swing.JFrame {
         
         
         
+    }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        UserName.setText(customer.getFullName());
     }
 
     public void setAccountList(List<BankAccount> accountList) {
@@ -56,7 +61,7 @@ public class MakeTransaction extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        UserName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Type_of_transaction = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -72,8 +77,8 @@ public class MakeTransaction extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Castellar", 1, 36)); // NOI18N
         jLabel1.setText("jj's bank");
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel2.setText("*User Name*");
+        UserName.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        UserName.setText("*User Name*");
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("Type of Transaction:");
@@ -101,7 +106,6 @@ public class MakeTransaction extends javax.swing.JFrame {
         jLabel6.setText("Description:");
 
         amount_field_Trans.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        amount_field_Trans.setText("textField1");
         amount_field_Trans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 amount_field_TransActionPerformed(evt);
@@ -112,7 +116,6 @@ public class MakeTransaction extends javax.swing.JFrame {
         jLabel7.setText("Amount:");
 
         description_transaction.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        description_transaction.setText("textField1");
         description_transaction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 description_transactionActionPerformed(evt);
@@ -135,7 +138,7 @@ public class MakeTransaction extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(UserName, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -160,7 +163,7 @@ public class MakeTransaction extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(UserName)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -246,11 +249,11 @@ public class MakeTransaction extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Type_of_transaction;
+    private javax.swing.JLabel UserName;
     private javax.swing.JComboBox<String> accounts;
     private java.awt.TextField amount_field_Trans;
     private java.awt.TextField description_transaction;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
