@@ -17,7 +17,7 @@ import org.json.JSONObject;
  */
 public class RESTConnection {
     public static Customer signIn(String email, String passcode){
-        String path = "http://localhost:8080/BankingSystem/api/Customer";
+        String path = "http://localhost:8080/BankingSystem/api/customer/login";
         Client client = Client.create();
         WebResource target = client.resource(path);
         ClientResponse response = target.queryParam("email", email)

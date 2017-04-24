@@ -5,8 +5,6 @@
  */
 package com.mycompany.bankingclient.models;
 
-import com.mycompany.bankingclient.models.Customer;
-import com.mycompany.bankingclient.models.Transaction;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -14,6 +12,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author User
+ * @author user
  */
 @Entity
 @Table(name = "bank_account")
@@ -46,6 +46,7 @@ public class BankAccount implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "a_id")
     private Integer aId;
@@ -171,11 +172,7 @@ public class BankAccount implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.bankingclient.BankAccount[ aId=" + aId + " ]";
-    }
-
-    public void setBalance(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "com.mycompany.bankingclient.models.BankAccount[ aId=" + aId + " ]";
     }
     
 }

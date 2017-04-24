@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,22 +25,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author User
+ * @author user
  */
 @Entity
 @Table(name = "transaction")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Transaction_1.findAll", query = "SELECT t FROM Transaction_1 t")
-    , @NamedQuery(name = "Transaction_1.findByTId", query = "SELECT t FROM Transaction_1 t WHERE t.tId = :tId")
-    , @NamedQuery(name = "Transaction_1.findByAmount", query = "SELECT t FROM Transaction_1 t WHERE t.amount = :amount")
-    , @NamedQuery(name = "Transaction_1.findByDescription", query = "SELECT t FROM Transaction_1 t WHERE t.description = :description")
-    , @NamedQuery(name = "Transaction_1.findByTType", query = "SELECT t FROM Transaction_1 t WHERE t.tType = :tType")
-    , @NamedQuery(name = "Transaction_1.findByDate", query = "SELECT t FROM Transaction_1 t WHERE t.date = :date")})
+    @NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction t")
+    , @NamedQuery(name = "Transaction.findByTId", query = "SELECT t FROM Transaction t WHERE t.tId = :tId")
+    , @NamedQuery(name = "Transaction.findByAmount", query = "SELECT t FROM Transaction t WHERE t.amount = :amount")
+    , @NamedQuery(name = "Transaction.findByDescription", query = "SELECT t FROM Transaction t WHERE t.description = :description")
+    , @NamedQuery(name = "Transaction.findByTType", query = "SELECT t FROM Transaction t WHERE t.tType = :tType")
+    , @NamedQuery(name = "Transaction.findByDate", query = "SELECT t FROM Transaction t WHERE t.date = :date")})
 public class Transaction implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "t_id")
     private Integer tId;
@@ -144,7 +147,7 @@ public class Transaction implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.bankingclient.Transaction_1[ tId=" + tId + " ]";
+        return "com.mycompany.bankingclient.models.Transaction[ tId=" + tId + " ]";
     }
     
 }

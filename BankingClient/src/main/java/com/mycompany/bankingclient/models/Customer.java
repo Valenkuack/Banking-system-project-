@@ -5,12 +5,13 @@
  */
 package com.mycompany.bankingclient.models;
 
-import com.mycompany.bankingclient.models.Transaction;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author User
+ * @author user
  */
 @Entity
 @Table(name = "customer")
@@ -40,6 +41,7 @@ public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "cus_id")
     private Integer cusId;
@@ -65,6 +67,10 @@ public class Customer implements Serializable {
     public Customer() {
     }
 
+    public Customer(Integer cusId) {
+        this.cusId = cusId;
+    }
+
     public Customer(Integer cusId, String fullName, String address, String email, Integer mobile, String securityAnswer, String securityQuestion, String passcode) {
         this.cusId = cusId;
         this.fullName = fullName;
@@ -75,10 +81,8 @@ public class Customer implements Serializable {
         this.securityQuestion = securityQuestion;
         this.passcode = passcode;
     }
-
-    public Customer(Integer cusId) {
-        this.cusId = cusId;
-    }
+    
+    
 
     public Integer getCusId() {
         return cusId;
@@ -184,7 +188,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.bankingclient.Customer[ cusId=" + cusId + " ]";
+        return "com.mycompany.bankingclient.models.Customer[ cusId=" + cusId + " ]";
     }
     
 }

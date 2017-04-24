@@ -151,6 +151,7 @@ public class Balance extends javax.swing.JFrame {
 
     private void Back_BalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back_BalanceActionPerformed
         Home myHome = new Home();
+        myHome.setCustomer(customer);
         myHome.setVisible(true);
         dispose();
     }//GEN-LAST:event_Back_BalanceActionPerformed

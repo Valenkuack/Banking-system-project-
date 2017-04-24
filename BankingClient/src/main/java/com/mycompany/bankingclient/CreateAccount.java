@@ -7,6 +7,7 @@ package com.mycompany.bankingclient;
 
 import com.mycompany.bankingclient.models.BankAccount;
 import com.mycompany.bankingclient.models.Customer;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -155,7 +156,7 @@ public class CreateAccount extends javax.swing.JFrame {
     private void Submit_createaccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit_createaccActionPerformed
        
         BankAccount a = new BankAccount();
-        a.setBalance(0);
+        a.setBalance(BigDecimal.ZERO);
         a.setAccountType(AccountType.getSelectedItem().toString());
         a.setSortCode(112233);
         a.setDateOfCreation(new Date());
@@ -176,6 +177,7 @@ public class CreateAccount extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Your new account has been created.");
             
             Home myHome = new Home();
+            myHome.setCustomer(customer);
             myHome.setVisible(true);
             dispose();
         }else{

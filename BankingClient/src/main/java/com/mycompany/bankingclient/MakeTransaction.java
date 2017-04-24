@@ -207,8 +207,9 @@ public class MakeTransaction extends javax.swing.JFrame {
     private void submit_TransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submit_TransactionActionPerformed
        selectedAccount = accountList.get(accounts.getSelectedIndex());
        Home myHome = new Home();
-        myHome.setVisible(true);
-        dispose();
+       myHome.setCustomer(customer);
+       myHome.setVisible(true);
+       dispose();
     }//GEN-LAST:event_submit_TransactionActionPerformed
 
     /**

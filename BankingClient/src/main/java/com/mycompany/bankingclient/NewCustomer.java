@@ -7,6 +7,7 @@ package com.mycompany.bankingclient;
 
 import com.mycompany.bankingclient.models.Customer;
 import com.mycompany.bankingclient.models.BankAccount;
+import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import java.util.Date;
 
@@ -211,7 +212,7 @@ public class NewCustomer extends javax.swing.JFrame {
             c = RESTConnection.signIn(Email.getText(), password);
             if(c != null){
                 BankAccount account = new BankAccount();
-                account.setBalance(0);
+                account.setBalance(BigDecimal.ZERO);
                 account.setAccountType("Current"); //default account when creating a customer is current account
                 account.setSortCode(112233);
                 account.setCusId(c);
@@ -228,6 +229,8 @@ public class NewCustomer extends javax.swing.JFrame {
                 }else{
                     JOptionPane.showMessageDialog(null, "Unable to create new account.");
                 }
+            }else{
+                 JOptionPane.showMessageDialog(null, "Unable to find new Cutomer.");
             }
         }else{
             JOptionPane.showMessageDialog(null, "Unable to create new customer.");
