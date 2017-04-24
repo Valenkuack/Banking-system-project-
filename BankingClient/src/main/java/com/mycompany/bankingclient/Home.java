@@ -17,7 +17,6 @@ import javax.swing.table.DefaultTableModel;
 public class Home extends javax.swing.JFrame {
 
     List<BankAccount> accountList;
-    List<String> accountNumber;
     Customer customer;
     /**
      * Creates new form Home
