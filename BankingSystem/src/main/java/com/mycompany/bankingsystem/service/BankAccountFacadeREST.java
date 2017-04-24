@@ -6,6 +6,7 @@
 package com.mycompany.bankingsystem.service;
 
 import com.mycompany.bankingsystem.BankAccount;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -88,5 +90,17 @@ public class BankAccountFacadeREST extends AbstractFacade<BankAccount> {
         return em;
     }
     
+    @GET
+    @Path("customerAccounts")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<BankAccount> customerAccounts(@QueryParam("cusId") Integer cusId){
+        List<BankAccount> account = new ArrayList<>();
+        for(BankAccount a: findAll()){
+            if(a.getCusId().getCusId().compareTo(cusId) == 0){
+                account.add(a);
+            }
+        }
+        return account;
+    }
     
 }

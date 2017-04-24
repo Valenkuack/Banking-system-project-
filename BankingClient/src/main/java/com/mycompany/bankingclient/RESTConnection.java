@@ -5,10 +5,14 @@
  */
 package com.mycompany.bankingclient;
 
+import com.mycompany.bankingclient.models.BankAccount;
 import com.mycompany.bankingclient.models.Customer;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.ClientResponse;
+import java.util.ArrayList;
+import java.util.List;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -22,7 +26,7 @@ public class RESTConnection {
         WebResource target = client.resource(path);
         ClientResponse response = target.queryParam("email", email)
                 .queryParam("passcode", passcode)
-                .accept("Application/json")
+                .accept("application/json")
                 .get(ClientResponse.class);
         String entity = response.getEntity(String.class);
         if(response.getStatus() == 200){
@@ -34,11 +38,36 @@ public class RESTConnection {
             json.getString("securityQuestion"), json.getString("passcode"));
             
             return c;
-        }else if(response.getStatus() == 204){
-            return null;
         }else{
             return null;
         }
+    }
+    
+    public static List<BankAccount> customerAccounts(Customer customer){
+        String path = "http://localhost:8080/BankingSystem/api/bankAccount/customerAccounts";
+        Client client = Client.create();
+        WebResource target = client.resource(path);
+        List<BankAccount> list = new ArrayList<>();
+        ClientResponse response = target.queryParam("cusId", customer.getCusId()+"")
+                .accept("application/json")
+                .get(ClientResponse.class);
+        String entity = response.getEntity(String.class);
+        System.out.println(entity);
+        if(response.getStatus() == 200){
+            JSONArray array = new JSONArray(entity);
+            for(int i= 0; i<array.length();i++){
+                JSONObject json = array.getJSONObject(i);
+                BankAccount account = new BankAccount();
+                account.setAId(json.getInt("AId"));
+                account.setCusId(customer);
+                account.setAccountType(json.getString("accountType"));
+                account.setBalance(json.getBigDecimal("balance"));
+                account.setSortCode(json.getInt("sortCode"));
+                list.add(account);
+            }
+            
+        }
+        return list;
     }
     
     public static boolean sendPostRequest(Object object, String apiPath){
