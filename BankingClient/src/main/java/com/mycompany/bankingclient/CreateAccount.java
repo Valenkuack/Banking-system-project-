@@ -14,8 +14,12 @@ import javax.swing.JOptionPane;
 
 
 /**
- *
- * @author User
+ * Banking system
+ * Final version
+ * Date 24/04/2017
+ * @reference https://www.youtube.com/watch?v=RDUPOnXCmuw&feature=youtu.be
+ * @author Jun Hsin Lim, Stuent ID  X16123107
+ * @author Jessica Valeria Hernandez Ramirez, Student ID X16118677
  */
 public class CreateAccount extends javax.swing.JFrame {
     final String ACCOUNT_API_PATH = "http://localhost:8080/BankingSystem/api/bankAccount";
