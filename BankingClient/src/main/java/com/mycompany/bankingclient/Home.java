@@ -17,6 +17,8 @@ package com.mycompany.bankingclient;
 
 import com.mycompany.bankingclient.models.BankAccount;
 import com.mycompany.bankingclient.models.Customer;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,6 +26,7 @@ import com.mycompany.bankingclient.models.Customer;
  */
 public class Home extends javax.swing.JFrame {
 
+    List<BankAccount> accountList;
     Customer customer;
     /**
      * Creates new form Home
@@ -35,7 +38,24 @@ public class Home extends javax.swing.JFrame {
     public void setCustomer(Customer customer) {
         this.customer = customer;
         UserName.setText(customer.getFullName());
+        
+        accountList = RESTConnection.customerAccounts(customer);
+        if(!accountList.isEmpty()){
+            Object[] columnNames = {"AId", "Account Type", "Balance"};
+            DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames);
+            for (BankAccount al : accountList){
+                Object[] o = new Object[3];
+                o[0] = al.getAId();
+                o[1] = al.getAccountType();
+                o[2] = al.getBalance();
+                model.addRow(o);
+            }
+            accountBalance.setModel(model);
+        }
     }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,7 +71,8 @@ public class Home extends javax.swing.JFrame {
         WelcomeMsg = new javax.swing.JLabel();
         CreateAcc = new javax.swing.JButton();
         MakeTrans = new javax.swing.JButton();
-        CheckBal = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        accountBalance = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,24 +101,23 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        CheckBal.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        CheckBal.setText("Check Balances");
-        CheckBal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CheckBalActionPerformed(evt);
+        accountBalance.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "AId", "Account Type", "Balance"
             }
-        });
+        ));
+        jScrollPane1.setViewportView(accountBalance);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BankName)
-                    .addComponent(UserName))
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -106,10 +126,16 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(106, 106, 106)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(CreateAcc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MakeTrans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CheckBal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(75, Short.MAX_VALUE))
+                            .addComponent(CreateAcc, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                            .addComponent(MakeTrans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BankName)
+                    .addComponent(UserName)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,9 +150,9 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(CreateAcc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(MakeTrans)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(CheckBal)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -141,19 +167,11 @@ public class Home extends javax.swing.JFrame {
 
     private void MakeTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MakeTransActionPerformed
         MakeTransaction trans = new MakeTransaction();
-        //trans.setAccountList();
         trans.setCustomer(customer);
+        trans.setAccountList(accountList);
         trans.setVisible(true);
         dispose();
     }//GEN-LAST:event_MakeTransActionPerformed
-
-    private void CheckBalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckBalActionPerformed
-        Balance bal = new Balance();
-        //bal.setAccountList();
-        bal.setCustomer(customer);
-        bal.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_CheckBalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,10 +210,11 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BankName;
-    private javax.swing.JButton CheckBal;
     private javax.swing.JButton CreateAcc;
     private javax.swing.JButton MakeTrans;
     private javax.swing.JLabel UserName;
     private javax.swing.JLabel WelcomeMsg;
+    private javax.swing.JTable accountBalance;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

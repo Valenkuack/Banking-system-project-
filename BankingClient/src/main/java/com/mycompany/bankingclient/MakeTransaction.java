@@ -7,9 +7,13 @@ package com.mycompany.bankingclient;
 
 import com.mycompany.bankingclient.models.BankAccount;
 import com.mycompany.bankingclient.models.Customer;
+import com.mycompany.bankingclient.models.Transaction;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  * Banking system
@@ -25,17 +29,14 @@ public class MakeTransaction extends javax.swing.JFrame {
     List<String> accountNumber;
     Customer customer;
     BankAccount selectedAccount;
+    final String TRANSACTION_API_PATH = "http://localhost:8080/BankingSystem/api/transaction";
+    final String ACCOUNT_API_PATH = "http://localhost:8080/BankingSystem/api/bankAccount";
     /**
      * Creates new form Transaction
      */
     public MakeTransaction() {
         initComponents();
-        
-        
         accountNumber = new ArrayList<>();
-        
-        
-        
     }
     public void setCustomer(Customer customer) {
         this.customer = customer;
@@ -50,7 +51,6 @@ public class MakeTransaction extends javax.swing.JFrame {
         }
         
         this.accounts.setModel(new DefaultComboBoxModel(accountNumber.toArray()));
-        
     }
     
     
@@ -67,14 +67,14 @@ public class MakeTransaction extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         UserName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        Type_of_transaction = new javax.swing.JComboBox<>();
+        transactionType = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         accounts = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        amount_field_Trans = new java.awt.TextField();
         jLabel7 = new javax.swing.JLabel();
-        description_transaction = new java.awt.TextField();
         submit_Transaction = new javax.swing.JButton();
+        amount = new javax.swing.JTextField();
+        desc = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,16 +87,16 @@ public class MakeTransaction extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("Type of Transaction:");
 
-        Type_of_transaction.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        Type_of_transaction.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lodgement", "Withdraw", "Transfer" }));
-        Type_of_transaction.addActionListener(new java.awt.event.ActionListener() {
+        transactionType.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        transactionType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lodgement", "Withdraw", "Transfer" }));
+        transactionType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Type_of_transactionActionPerformed(evt);
+                transactionTypeActionPerformed(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel4.setText("Account:");
+        jLabel4.setText("From Account:");
 
         accounts.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         accounts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -109,22 +109,8 @@ public class MakeTransaction extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel6.setText("Description:");
 
-        amount_field_Trans.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        amount_field_Trans.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                amount_field_TransActionPerformed(evt);
-            }
-        });
-
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setText("Amount:");
-
-        description_transaction.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        description_transaction.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                description_transactionActionPerformed(evt);
-            }
-        });
 
         submit_Transaction.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         submit_Transaction.setText("Submit");
@@ -133,6 +119,10 @@ public class MakeTransaction extends javax.swing.JFrame {
                 submit_TransactionActionPerformed(evt);
             }
         });
+
+        amount.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        desc.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,23 +133,21 @@ public class MakeTransaction extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(UserName, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(amount_field_Trans, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(accounts, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Type_of_transaction, javax.swing.GroupLayout.Alignment.LEADING, 0, 224, Short.MAX_VALUE)
-                            .addComponent(description_transaction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(submit_Transaction)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel6))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(accounts, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(transactionType, javax.swing.GroupLayout.Alignment.LEADING, 0, 224, Short.MAX_VALUE)
+                                .addComponent(amount, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(desc)))))
                 .addContainerGap(22, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(submit_Transaction)
-                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,49 +159,74 @@ public class MakeTransaction extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(Type_of_transaction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(transactionType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(accounts, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(accounts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(amount_field_Trans, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(description_transaction, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                    .addComponent(desc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(submit_Transaction)
-                .addGap(20, 20, 20))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Type_of_transactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Type_of_transactionActionPerformed
+    private void transactionTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionTypeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Type_of_transactionActionPerformed
+    }//GEN-LAST:event_transactionTypeActionPerformed
 
     private void accountsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_accountsActionPerformed
 
-    private void amount_field_TransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amount_field_TransActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_amount_field_TransActionPerformed
-
-    private void description_transactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_description_transactionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_description_transactionActionPerformed
-
     private void submit_TransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submit_TransactionActionPerformed
+       Transaction t = new Transaction();
        selectedAccount = accountList.get(accounts.getSelectedIndex());
-       Home myHome = new Home();
-       myHome.setCustomer(customer);
-       myHome.setVisible(true);
-       dispose();
+       
+       t.setAId(selectedAccount);
+       t.setCusId(customer);
+       BigDecimal amt = new BigDecimal(amount.getText());
+       t.setAmount(amt);
+       t.setDescription(desc.getText());
+       t.setTType(transactionType.getSelectedItem().toString());
+       t.setDate(new Date());
+       
+       boolean status = RESTConnection.sendPostRequest(t, TRANSACTION_API_PATH);
+       
+       if(status == true){
+            BigDecimal oriBal = selectedAccount.getBalance();
+            BigDecimal newBal = BigDecimal.ZERO;
+            if(transactionType.getSelectedItem().toString().equals("Lodgement")){
+                newBal = oriBal.add(amt);
+            }else if(transactionType.getSelectedItem().toString().equals("Withdraw")){
+                newBal = oriBal.subtract(amt);
+            }else if(transactionType.getSelectedItem().toString().equals("Transfer")){
+                newBal = oriBal.subtract(amt);
+            }
+            selectedAccount.setBalance(newBal);
+            boolean accountStatus = RESTConnection.sendPutRequest(selectedAccount, ACCOUNT_API_PATH, selectedAccount.getAId());
+            if(accountStatus == true){
+                JOptionPane.showMessageDialog(null, "Your transaction has been completed and your balance has been updated.");
+                
+                Home myHome = new Home();
+                myHome.setCustomer(customer);
+                myHome.setVisible(true);
+                dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Your account balance could not be updated");
+            }
+        }else{
+           JOptionPane.showMessageDialog(null, "Unable to complete transaction.");
+       }
     }//GEN-LAST:event_submit_TransactionActionPerformed
 
     /**
@@ -253,16 +266,16 @@ public class MakeTransaction extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> Type_of_transaction;
     private javax.swing.JLabel UserName;
     private javax.swing.JComboBox<String> accounts;
-    private java.awt.TextField amount_field_Trans;
-    private java.awt.TextField description_transaction;
+    private javax.swing.JTextField amount;
+    private javax.swing.JTextField desc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JButton submit_Transaction;
+    private javax.swing.JComboBox<String> transactionType;
     // End of variables declaration//GEN-END:variables
 }
