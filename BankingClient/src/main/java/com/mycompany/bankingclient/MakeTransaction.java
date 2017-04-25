@@ -16,15 +16,18 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author User
+ * MakeTransaction.java
+ * 
+ * @reference https://www.youtube.com/watch?v=RDUPOnXCmuw&feature=youtu.be
+ * @author Jun Hsin Lim, 16123107
+ * @author Jessica Valeria, 16118677
  */
 public class MakeTransaction extends javax.swing.JFrame {
 
-    List<BankAccount> accountList; //array to hold the accountList passed in through the method
-    List<String> accountNumber; //
+    List<BankAccount> accountList; //array of BankAccount objects to hold the accountList passed in through the method
+    List<String> accountNumber; //array of Strings to hold the information retrieved from the accountList array
     Customer customer;
-    BankAccount selectedAccount;
+    BankAccount selectedAccount; //BankAccount object initialised as selectedAccount to hold the account selected by customer
     final String TRANSACTION_API_PATH = "http://localhost:8080/BankingSystem/api/transaction";
     final String ACCOUNT_API_PATH = "http://localhost:8080/BankingSystem/api/bankAccount";
     /**
@@ -36,7 +39,7 @@ public class MakeTransaction extends javax.swing.JFrame {
     }
     public void setCustomer(Customer customer) {
         this.customer = customer;
-        UserName.setText(customer.getFullName());
+        userName.setText(customer.getFullName());
     }
 
     public void setAccountList(List<BankAccount> accountList) {
@@ -61,7 +64,7 @@ public class MakeTransaction extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        UserName = new javax.swing.JLabel();
+        userName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         transactionType = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -77,8 +80,8 @@ public class MakeTransaction extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Castellar", 1, 36)); // NOI18N
         jLabel1.setText("jj's bank");
 
-        UserName.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        UserName.setText("*User Name*");
+        userName.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        userName.setText("*User Name*");
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("Type of Transaction:");
@@ -128,7 +131,7 @@ public class MakeTransaction extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(UserName, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(submit_Transaction)
                         .addGroup(layout.createSequentialGroup()
@@ -151,7 +154,7 @@ public class MakeTransaction extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(UserName)
+                .addComponent(userName)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -200,30 +203,42 @@ public class MakeTransaction extends javax.swing.JFrame {
        t.setCusId(customer);
        //mySQL double is a BigDecimal in Java
        //create new variable amt
-       //set amt = <variableName>
+       //set amt = <variableName>.getText()
        BigDecimal amt = new BigDecimal(amount.getText());
        t.setAmount(amt);
        t.setDescription(desc.getText());
+       //transactionType is where users select which type of transaction they want to do
+       //ie. Lodgemnet, Withdraw, Transfer
        t.setTType(transactionType.getSelectedItem().toString());
        t.setDate(new Date());
        
+       //send POST request to TRANSACTION_API_PATH to create transaction
        boolean status = RESTConnection.sendPostRequest(t, TRANSACTION_API_PATH);
        
-       if(status == true){
-            BigDecimal oriBal = selectedAccount.getBalance();
-            BigDecimal newBal = BigDecimal.ZERO;
-            if(transactionType.getSelectedItem().toString().equals("Lodgement")){
-                newBal = oriBal.add(amt);
-            }else if(transactionType.getSelectedItem().toString().equals("Withdraw")){
-                newBal = oriBal.subtract(amt);
-            }else if(transactionType.getSelectedItem().toString().equals("Transfer")){
-                newBal = oriBal.subtract(amt);
+       if(status == true){ //if transaction is successfully created         
+            BigDecimal oriBal = selectedAccount.getBalance(); //create a variable to hold the original balance
+            BigDecimal newBal = BigDecimal.ZERO; //create a variable to hold the new balance
+            
+            if(transactionType.getSelectedItem().toString().equals("Lodgement")){ //if customer selected Lodgement
+                newBal = oriBal.add(amt); //newBal = oriBal + amt (lodgement results in increase of account balance)
+            }else if(transactionType.getSelectedItem().toString().equals("Withdraw")){ //if customer selected Withdraw
+                newBal = oriBal.subtract(amt); //newBal = oriBal - amt (withdrawal results in reduced of account balance)
+            }else if(transactionType.getSelectedItem().toString().equals("Transfer")){ //if customer selected Transfer
+                //assuming that JJ's Bank only allows transfers to accounts outside of the bank
+                //JJ's Bank would not be able to update the payee account
+                //we are not doing a transfered to
+                //treating transfer as outflow of funds from customer's account
+                //we are ignoring where the funds go
+                newBal = oriBal.subtract(amt); //newBal = oriBal - amt (transfer means money goes out of customer's account into another account)
             }
-            selectedAccount.setBalance(newBal);
+            selectedAccount.setBalance(newBal); //update the balance of the selected account
+            
+            //send PUT request to update the account balance through ACCOUNT_API_PATH
             boolean accountStatus = RESTConnection.sendPutRequest(selectedAccount, ACCOUNT_API_PATH, selectedAccount.getAId());
-            if(accountStatus == true){
+            if(accountStatus == true){ //if account is successfully updated
                 JOptionPane.showMessageDialog(null, "Your transaction has been completed and your balance has been updated.");
                 
+                //Go back to home page
                 Home myHome = new Home();
                 myHome.setCustomer(customer);
                 myHome.setVisible(true);
@@ -273,7 +288,6 @@ public class MakeTransaction extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel UserName;
     private javax.swing.JComboBox<String> accounts;
     private javax.swing.JTextField amount;
     private javax.swing.JTextField desc;
@@ -284,5 +298,6 @@ public class MakeTransaction extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JButton submit_Transaction;
     private javax.swing.JComboBox<String> transactionType;
+    private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
 }

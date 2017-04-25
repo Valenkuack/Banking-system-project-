@@ -1,12 +1,11 @@
-com\mycompany\bankingsystem\service\AbstractFacade.class
-com\mycompany\bankingsystem\Transaction_.class
-com\mycompany\bankingsystem\service\BankAccountFacadeREST.class
-com\mycompany\bankingsystem\service\CustomerFacadeREST.class
-com\mycompany\bankingsystem\Transaction.class
 com\mycompany\bankingsystem\Customer_.class
+com\mycompany\bankingsystem\service\AbstractFacade.class
 com\mycompany\bankingsystem\service\TransactionFacadeREST.class
 com\mycompany\bankingsystem\Customer.class
+com\mycompany\bankingsystem\Transaction_.class
 com\mycompany\bankingsystem\BankAccount.class
 com\mycompany\bankingsystem\BankAccount_.class
 com\mycompany\bankingsystem\service\ApplicationConfig.class
-.netbeans_automatic_build
+com\mycompany\bankingsystem\service\BankAccountFacadeREST.class
+com\mycompany\bankingsystem\service\CustomerFacadeREST.class
+com\mycompany\bankingsystem\Transaction.class

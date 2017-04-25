@@ -13,8 +13,11 @@ import javax.swing.JOptionPane;
 import org.json.JSONObject;
 
 /**
- *
- * @author user
+ * SignIn.java
+ * 
+ * @reference https://www.youtube.com/watch?v=RDUPOnXCmuw&feature=youtu.be
+ * @author Jun Hsin Lim, 16123107
+ * @author Jessica Valeria, 16118677
  */
 public class SignIn extends javax.swing.JFrame {
 
@@ -40,11 +43,11 @@ public class SignIn extends javax.swing.JFrame {
         BankName = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        Email = new javax.swing.JTextField();
-        Submit = new javax.swing.JButton();
+        email = new javax.swing.JTextField();
+        submit = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        SignUp = new javax.swing.JButton();
-        Password = new javax.swing.JPasswordField();
+        signUp = new javax.swing.JButton();
+        password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,22 +60,22 @@ public class SignIn extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("Password:");
 
-        Submit.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        Submit.setText("Submit");
-        Submit.addActionListener(new java.awt.event.ActionListener() {
+        submit.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        submit.setText("Submit");
+        submit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SubmitActionPerformed(evt);
+                submitActionPerformed(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setText("New customer?");
 
-        SignUp.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        SignUp.setText("Sign Up");
-        SignUp.addActionListener(new java.awt.event.ActionListener() {
+        signUp.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        signUp.setText("Sign Up");
+        signUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SignUpActionPerformed(evt);
+                signUpActionPerformed(evt);
             }
         });
 
@@ -88,20 +91,20 @@ public class SignIn extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(72, 72, 72)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Submit)
+                            .addComponent(submit)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel4)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(SignUp))
+                                    .addComponent(signUp))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel2)
                                         .addComponent(jLabel3))
                                     .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(Email, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                                        .addComponent(Password)))))))
+                                        .addComponent(email, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                                        .addComponent(password)))))))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -112,31 +115,31 @@ public class SignIn extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(Submit)
+                .addComponent(submit)
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(SignUp))
+                    .addComponent(signUp))
                 .addGap(21, 21, 21))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpActionPerformed
+    private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed
         NewCustomer create = new NewCustomer();
         create.setVisible(true);
         dispose();
-    }//GEN-LAST:event_SignUpActionPerformed
+    }//GEN-LAST:event_signUpActionPerformed
 
-    private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
-        customer = RESTConnection.signIn(Email.getText(), new String(Password.getPassword()));
+    private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
+        customer = RESTConnection.signIn(email.getText(), new String(password.getPassword()));
         if(customer == null){
             JOptionPane.showMessageDialog(null, "Login was unsuccessful.");
         }else{
@@ -145,7 +148,7 @@ public class SignIn extends javax.swing.JFrame {
             myhome.setVisible(true);
             this.dispose();
         }
-    }//GEN-LAST:event_SubmitActionPerformed
+    }//GEN-LAST:event_submitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,12 +187,12 @@ public class SignIn extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BankName;
-    private javax.swing.JTextField Email;
-    private javax.swing.JPasswordField Password;
-    private javax.swing.JButton SignUp;
-    private javax.swing.JButton Submit;
+    private javax.swing.JTextField email;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPasswordField password;
+    private javax.swing.JButton signUp;
+    private javax.swing.JButton submit;
     // End of variables declaration//GEN-END:variables
 }

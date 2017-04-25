@@ -12,8 +12,9 @@ import javax.swing.JOptionPane;
 import java.util.Date;
 
 /**
- *
- * @author user
+ * NewCustomer.java
+ * 
+ * @reference https://www.youtube.com/watch?v=RDUPOnXCmuw&feature=youtu.be
  */
 public class NewCustomer extends javax.swing.JFrame {
 
@@ -43,13 +44,13 @@ public class NewCustomer extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        FullName = new javax.swing.JTextField();
-        Address = new javax.swing.JTextField();
-        Email = new javax.swing.JTextField();
-        Mobile = new javax.swing.JTextField();
-        SecurityQ = new javax.swing.JTextField();
-        SecurityA = new javax.swing.JTextField();
-        Submit = new javax.swing.JButton();
+        fullName = new javax.swing.JTextField();
+        address = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
+        mobile = new javax.swing.JTextField();
+        securityQ = new javax.swing.JTextField();
+        securityA = new javax.swing.JTextField();
+        submit = new javax.swing.JButton();
         Password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -78,28 +79,28 @@ public class NewCustomer extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel8.setText("Password:");
 
-        FullName.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        FullName.addActionListener(new java.awt.event.ActionListener() {
+        fullName.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        fullName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FullNameActionPerformed(evt);
+                fullNameActionPerformed(evt);
             }
         });
 
-        Address.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        address.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
-        Email.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        email.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
-        Mobile.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        mobile.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
-        SecurityQ.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        securityQ.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
-        SecurityA.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        securityA.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
-        Submit.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        Submit.setText("Submit");
-        Submit.addActionListener(new java.awt.event.ActionListener() {
+        submit.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        submit.setText("Submit");
+        submit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SubmitActionPerformed(evt);
+                submitActionPerformed(evt);
             }
         });
 
@@ -122,7 +123,7 @@ public class NewCustomer extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Submit)
+                            .addComponent(submit)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -134,13 +135,13 @@ public class NewCustomer extends javax.swing.JFrame {
                                     .addComponent(jLabel8))
                                 .addGap(23, 23, 23)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Address)
-                                    .addComponent(Email)
-                                    .addComponent(Mobile)
-                                    .addComponent(SecurityQ)
-                                    .addComponent(SecurityA)
+                                    .addComponent(address)
+                                    .addComponent(email)
+                                    .addComponent(mobile)
+                                    .addComponent(securityQ)
+                                    .addComponent(securityA)
                                     .addComponent(Password, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                                    .addComponent(FullName))))))
+                                    .addComponent(fullName))))))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -151,57 +152,57 @@ public class NewCustomer extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2)
-                    .addComponent(FullName, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE))
+                    .addComponent(fullName, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3)
-                    .addComponent(Address, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
+                    .addComponent(address, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4)
-                    .addComponent(Email, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
+                    .addComponent(email, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5)
-                    .addComponent(Mobile, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
+                    .addComponent(mobile, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6)
-                    .addComponent(SecurityQ, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
+                    .addComponent(securityQ, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel7)
-                    .addComponent(SecurityA, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
+                    .addComponent(securityA, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(Password, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Submit)
+                .addComponent(submit)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void FullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FullNameActionPerformed
+    private void fullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_FullNameActionPerformed
+    }//GEN-LAST:event_fullNameActionPerformed
 
     private void PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_PasswordActionPerformed
 
-    private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
+    private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         //create new customer
         Customer c = new Customer();
         String password = new String(Password.getPassword());
-        c.setFullName(FullName.getText());
-        c.setAddress(Address.getText());
-        c.setEmail(Email.getText());
-        c.setMobile(Integer.parseInt(Mobile.getText()));
-        c.setSecurityQuestion(SecurityQ.getText());
-        c.setSecurityAnswer(SecurityA.getText());
+        c.setFullName(fullName.getText());
+        c.setAddress(address.getText());
+        c.setEmail(email.getText());
+        c.setMobile(Integer.parseInt(mobile.getText()));
+        c.setSecurityQuestion(securityQ.getText());
+        c.setSecurityAnswer(securityA.getText());
         c.setPasscode(password);
         
         boolean status = RESTConnection.sendPostRequest(c, CUSTOMER_API_PATH);
@@ -209,7 +210,7 @@ public class NewCustomer extends javax.swing.JFrame {
         //create new account
         if(status == true){
             //Sign in request
-            c = RESTConnection.signIn(Email.getText(), password);
+            c = RESTConnection.signIn(email.getText(), password);
             if(c != null){
                 BankAccount account = new BankAccount();
                 account.setBalance(BigDecimal.ZERO);
@@ -235,7 +236,7 @@ public class NewCustomer extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Unable to create new customer.");
         }
-    }//GEN-LAST:event_SubmitActionPerformed
+    }//GEN-LAST:event_submitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -276,15 +277,11 @@ public class NewCustomer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Address;
     private javax.swing.JLabel BankName;
-    private javax.swing.JTextField Email;
-    private javax.swing.JTextField FullName;
-    private javax.swing.JTextField Mobile;
     private javax.swing.JPasswordField Password;
-    private javax.swing.JTextField SecurityA;
-    private javax.swing.JTextField SecurityQ;
-    private javax.swing.JButton Submit;
+    private javax.swing.JTextField address;
+    private javax.swing.JTextField email;
+    private javax.swing.JTextField fullName;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -292,5 +289,9 @@ public class NewCustomer extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JTextField mobile;
+    private javax.swing.JTextField securityA;
+    private javax.swing.JTextField securityQ;
+    private javax.swing.JButton submit;
     // End of variables declaration//GEN-END:variables
 }

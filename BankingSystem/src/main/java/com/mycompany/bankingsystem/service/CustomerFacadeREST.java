@@ -22,8 +22,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
- * @author user
+ * CustomerFacadeREST.java
+ * 
+ * @reference https://www.youtube.com/watch?v=RDUPOnXCmuw&feature=youtu.be
  */
 @Stateless
 @Path("customer")
@@ -70,6 +71,9 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
         return super.findAll();
     }
     
+    /*
+    * @reference https://www.youtube.com/watch?v=RDUPOnXCmuw&feature=youtu.be
+    */
     @GET
     @Path("login")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

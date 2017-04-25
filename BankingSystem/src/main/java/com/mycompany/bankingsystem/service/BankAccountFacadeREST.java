@@ -23,8 +23,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
- * @author user
+ * BankAccountFacadeREST.java
+ * 
+ * @author Jun Hsin Lim, 16123107
+ * @author Jessica Valeria, 16118677
  */
 @Stateless
 @Path("bankAccount")
@@ -90,6 +92,9 @@ public class BankAccountFacadeREST extends AbstractFacade<BankAccount> {
         return em;
     }
     
+    /*
+    * @author Jun Hsin Lim, 16123107
+    */
     @GET
     @Path("customerAccounts")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

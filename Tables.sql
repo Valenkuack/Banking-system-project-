@@ -1,6 +1,3 @@
-USE banking;
-SHOW TABLES;
-
 SELECT * FROM customer;
 SELECT * FROM transaction;
 SELECT * FROM bank_account;

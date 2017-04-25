@@ -11,13 +11,15 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author user
+ * Home.java
+ * 
+ * @reference https://www.youtube.com/watch?v=RDUPOnXCmuw&feature=youtu.be
+ * @author Jun Hsin Lim, 16123107
+ * @author Jessica Valeria, 16118677
  */
 public class Home extends javax.swing.JFrame {
 
-    List<BankAccount> accountList;
-    
+    List<BankAccount> accountList; //arrayList to hold lists of accounts 
     Customer customer;
     /**
      * Creates new form Home
@@ -26,22 +28,26 @@ public class Home extends javax.swing.JFrame {
         initComponents();
     }
 
+    /*
+        * @reference https://www.youtube.com/watch?v=RDUPOnXCmuw&feature=youtu.be
+    */
     public void setCustomer(Customer customer) {
         this.customer = customer;
-        UserName.setText(customer.getFullName());
+        userName.setText(customer.getFullName()); //change userName label to the customer's fullName
         
+        //call GET method customerAccounts through the RESTConnection to retrieve accountList
         accountList = RESTConnection.customerAccounts(customer);
-        if(!accountList.isEmpty()){
-            Object[] columnNames = {"AId", "Account Type", "Balance"};
-            DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames);
-            for (BankAccount al : accountList){
-                Object[] o = new Object[3];
-                o[0] = al.getAId();
-                o[1] = al.getAccountType();
-                o[2] = al.getBalance();
-                model.addRow(o);
+        if(!accountList.isEmpty()){ //check if accountList is empty, "if accountList is NOT empty..."
+            Object[] columnNames = {"AId", "Account Type", "Balance"}; //create object array columnNames to hold column names for the table
+            DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames); //2D objectarray because table is rows and columns
+            for (BankAccount al : accountList){ //go through the accountList
+                Object[] o = new Object[3]; //create a new object array with 3 index for the 3 columns
+                o[0] = al.getAId(); //insert AId into the first column
+                o[1] = al.getAccountType(); //insert AccountType into the second column
+                o[2] = al.getBalance(); //insert Balance into the third column
+                model.addRow(o); //add the object as a new row in model
             }
-            accountBalance.setModel(model);
+            accountBalance.setModel(model); //display the model from the above loop in the table in the GUI (accountBalance) 
         }
     }
     
@@ -58,10 +64,10 @@ public class Home extends javax.swing.JFrame {
     private void initComponents() {
 
         BankName = new javax.swing.JLabel();
-        UserName = new javax.swing.JLabel();
+        userName = new javax.swing.JLabel();
         WelcomeMsg = new javax.swing.JLabel();
-        CreateAcc = new javax.swing.JButton();
-        MakeTrans = new javax.swing.JButton();
+        createAcc = new javax.swing.JButton();
+        makeTrans = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         accountBalance = new javax.swing.JTable();
 
@@ -70,30 +76,34 @@ public class Home extends javax.swing.JFrame {
         BankName.setFont(new java.awt.Font("Castellar", 1, 36)); // NOI18N
         BankName.setText("JJ's Bank");
 
-        UserName.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        UserName.setText("UserName");
+        userName.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        userName.setText("UserName");
 
         WelcomeMsg.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         WelcomeMsg.setText("What would you like to do today?");
 
-        CreateAcc.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        CreateAcc.setText("Create New Account");
-        CreateAcc.addActionListener(new java.awt.event.ActionListener() {
+        createAcc.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        createAcc.setText("Create New Account");
+        createAcc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CreateAccActionPerformed(evt);
+                createAccActionPerformed(evt);
             }
         });
 
-        MakeTrans.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        MakeTrans.setText("Make a Transaction");
-        MakeTrans.addActionListener(new java.awt.event.ActionListener() {
+        makeTrans.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        makeTrans.setText("Make a Transaction");
+        makeTrans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MakeTransActionPerformed(evt);
+                makeTransActionPerformed(evt);
             }
         });
 
         accountBalance.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -110,23 +120,27 @@ public class Home extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BankName)
+                            .addComponent(userName))
+                        .addGap(0, 183, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addComponent(WelcomeMsg))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
+                        .addGap(105, 105, 105)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(CreateAcc, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                            .addComponent(MakeTrans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(createAcc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(makeTrans, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BankName)
-                    .addComponent(UserName)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,35 +148,35 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(BankName)
                 .addGap(18, 18, 18)
-                .addComponent(UserName)
+                .addComponent(userName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(WelcomeMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(CreateAcc)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(createAcc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(MakeTrans)
-                .addGap(54, 54, 54)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addComponent(makeTrans)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CreateAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateAccActionPerformed
-        CreateAccount create = new CreateAccount();
-        create.setCustomer(customer);
+    private void createAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccActionPerformed
+        CreateAccount create = new CreateAccount(); //go to CreateAccount GUI
+        create.setCustomer(customer); //pass customer over to the setCustomer method
         create.setVisible(true);
         dispose();
-    }//GEN-LAST:event_CreateAccActionPerformed
+    }//GEN-LAST:event_createAccActionPerformed
 
-    private void MakeTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MakeTransActionPerformed
-        MakeTransaction trans = new MakeTransaction();
+    private void makeTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeTransActionPerformed
+        MakeTransaction trans = new MakeTransaction(); //go to MakeTransaction GUI
         trans.setCustomer(customer);
-        trans.setAccountList(accountList);
+        trans.setAccountList(accountList); //pass accountList to the setAccountList method
         trans.setVisible(true);
         dispose();
-    }//GEN-LAST:event_MakeTransActionPerformed
+    }//GEN-LAST:event_makeTransActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,11 +215,11 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BankName;
-    private javax.swing.JButton CreateAcc;
-    private javax.swing.JButton MakeTrans;
-    private javax.swing.JLabel UserName;
     private javax.swing.JLabel WelcomeMsg;
     private javax.swing.JTable accountBalance;
+    private javax.swing.JButton createAcc;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton makeTrans;
+    private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
 }

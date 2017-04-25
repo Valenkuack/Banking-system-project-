@@ -16,9 +16,16 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- *
- * @author user
+ * RESTConnection.java
+ * 
+ * @reference https://www.youtube.com/watch?v=RDUPOnXCmuw&feature=youtu.be
+ * @author Jun Hsin Lim, 16123107
+ * @author Jessica Valeria, 16118677
  */
+
+/*
+* @reference https://www.youtube.com/watch?v=RDUPOnXCmuw&feature=youtu.be
+*/
 public class RESTConnection {
     public static Customer signIn(String email, String passcode){
         String path = "http://localhost:8080/BankingSystem/api/customer/login";
@@ -43,31 +50,36 @@ public class RESTConnection {
         }
     }
     
-    public static List<BankAccount> customerAccounts(Customer customer){
-        String path = "http://localhost:8080/BankingSystem/api/bankAccount/customerAccounts";
+    /*
+    * @author Jun Hsin Lim, 16123107
+    */
+    public static List<BankAccount> customerAccounts(Customer customer){ //return List<BankAccount> and accepts Customer object as customer
+        String path = "http://localhost:8080/BankingSystem/api/bankAccount/customerAccounts"; //path to /bankAccount/customerAccounts in the BankAccountFacadeREST
         Client client = Client.create();
         WebResource target = client.resource(path);
-        List<BankAccount> list = new ArrayList<>();
-        ClientResponse response = target.queryParam("cusId", customer.getCusId()+"")
+         
+        ClientResponse response = target.queryParam("cusId", customer.getCusId()+"") 
                 .accept("application/json")
                 .get(ClientResponse.class);
         String entity = response.getEntity(String.class);
         System.out.println(entity);
-        if(response.getStatus() == 200){
-            JSONArray array = new JSONArray(entity);
-            for(int i= 0; i<array.length();i++){
-                JSONObject json = array.getJSONObject(i);
+        
+        List<BankAccount> list = new ArrayList<>(); //create BankAccount List list
+        if(response.getStatus() == 200){ //if GET is succeddful
+            JSONArray array = new JSONArray(entity); //create a JSONArray to hold entity
+            for(int i= 0; i<array.length();i++){ //do through the array
+                JSONObject json = array.getJSONObject(i); //traverse the array
                 BankAccount account = new BankAccount();
                 account.setAId(json.getInt("AId"));
                 account.setCusId(customer);
                 account.setAccountType(json.getString("accountType"));
                 account.setBalance(json.getBigDecimal("balance"));
                 account.setSortCode(json.getInt("sortCode"));
-                list.add(account);
+                list.add(account); //add account to the list array
             }
             
         }
-        return list;
+        return list; //return the list array
     }
     
     public static boolean sendPostRequest(Object object, String apiPath){
