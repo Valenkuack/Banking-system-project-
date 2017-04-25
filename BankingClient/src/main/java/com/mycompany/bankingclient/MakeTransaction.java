@@ -16,17 +16,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
- * Banking system
- * Final version
- * Date 24/04/2017
- * @reference https://www.youtube.com/watch?v=RDUPOnXCmuw&feature=youtu.be
- * @author Jun Hsin Lim, Stuent ID  X16123107
- * @author Jessica Valeria Hernandez Ramirez, Student ID X16118677
+ *
+ * @author User
  */
 public class MakeTransaction extends javax.swing.JFrame {
 
-    List<BankAccount> accountList;
-    List<String> accountNumber;
+    List<BankAccount> accountList; //array to hold the accountList passed in through the method
+    List<String> accountNumber; //
     Customer customer;
     BankAccount selectedAccount;
     final String TRANSACTION_API_PATH = "http://localhost:8080/BankingSystem/api/transaction";
@@ -189,11 +185,22 @@ public class MakeTransaction extends javax.swing.JFrame {
     }//GEN-LAST:event_accountsActionPerformed
 
     private void submit_TransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submit_TransactionActionPerformed
+       //create an instance of Transaction table t
+       //<tabl_name> <name you want to call it> = new <table_name>();
        Transaction t = new Transaction();
+       
+       //selectedAccount holds the account that is selected by customer from the GUI
+       //<selectedAccount> = <name_of_list_that_holds_array_of_accounts>.get(<variableName>.getSelectedIndex());
        selectedAccount = accountList.get(accounts.getSelectedIndex());
        
+       //input the fields selectted by customer into the table
+       //t = the name i gave the table above
+       //.set<columnName>(<variableNamge.getText/String());
        t.setAId(selectedAccount);
        t.setCusId(customer);
+       //mySQL double is a BigDecimal in Java
+       //create new variable amt
+       //set amt = <variableName>
        BigDecimal amt = new BigDecimal(amount.getText());
        t.setAmount(amt);
        t.setDescription(desc.getText());

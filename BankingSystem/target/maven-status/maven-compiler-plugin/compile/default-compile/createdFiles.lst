@@ -9,3 +9,4 @@ com\mycompany\bankingsystem\Customer.class
 com\mycompany\bankingsystem\BankAccount.class
 com\mycompany\bankingsystem\BankAccount_.class
 com\mycompany\bankingsystem\service\ApplicationConfig.class
+.netbeans_automatic_build

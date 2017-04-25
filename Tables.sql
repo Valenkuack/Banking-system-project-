@@ -1,7 +1,12 @@
-create database banking;
+USE banking;
+SHOW TABLES;
 
-use banking;
+SELECT * FROM customer;
+SELECT * FROM transaction;
+SELECT * FROM bank_account;
 
+drop table if exists transaction;
+drop table if exists bank_account;
 drop table if exists customer;
 
 create table customer
@@ -41,4 +46,3 @@ date DATE,
 FOREIGN KEY (a_id) REFERENCES bank_account(a_id),
 FOREIGN KEY (cus_id) REFERENCES Customer(cus_id)
 );
-

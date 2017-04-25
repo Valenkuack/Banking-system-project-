@@ -1,13 +1,3 @@
-/**
- * Banking system
- * Final version
- * Date 24/04/2017
- * @author Jun Hsin Lim, Stuent ID  X16123107
- * @author Jessica Valeria Hernandez Ramirez, Student ID X16118677
- */
-
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -27,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 public class Home extends javax.swing.JFrame {
 
     List<BankAccount> accountList;
+    
     Customer customer;
     /**
      * Creates new form Home
